@@ -14,12 +14,19 @@
             <span class="score">Score: 0</span>
             <span class="high-score">High Score: 0</span>
         </div>
+        <h1 id="helpText">Choose A Difficulty</h1>
         <div class="play-board"></div>
         <div class="controls">
             <i data-key="a" class="fa-solid fa-arrow-left-long"></i>
             <i data-key="w" class="fa-solid fa-arrow-up-long"></i>
             <i data-key="d" class="fa-solid fa-arrow-right-long"></i>
             <i data-key="s" class="fa-solid fa-arrow-down-long"></i>
+        </div>
+        <div class="difficultyButtons">
+            <button id="easy" onclick="changeDifficultyToEasy()">easy</button>
+            <button id="medium" onclick="changeDifficultyToMedium()">medium</button>
+            <button id="hard" onclick="changeDifficultyToHard()">hard</button>
+            <button id="impossible" onclick="changeDifficultyToImpossible()">impossible</button>
         </div>
     </div>
 </body>

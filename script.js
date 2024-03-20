@@ -2,14 +2,16 @@ const playBoard = document.querySelector(".play-board");
 const scoreElement = document.querySelector(".score");
 const highScoreElement = document.querySelector(".high-score");
 const controls = document.querySelectorAll(".controls i");
+const helpText = document.getElementById("helpText");
 
 let gameOver = false;
 let foodX, foodY;
-let snakeX = 5, snakeY = 10;
+let snakeX = 15, snakeY = 15;
 let snakeBody = [];
 let velocityX = 0, velocityY = 0;
 let setIntervalId;
 let score = 0;
+let intervalReccurence = 125;
 
 let highScore = localStorage.getItem("high-score") || 0;
 highScoreElement.innerText = `High Score: ${highScore}`;
@@ -17,6 +19,26 @@ highScoreElement.innerText = `High Score: ${highScore}`;
 const changeFoodPosition = () => {
     foodX = Math.floor(Math.random() * 30) + 1;
     foodY = Math.floor(Math.random() * 30) + 1;
+}
+
+const changeDifficultyToEasy = () => {
+    intervalReccurence = 125;
+    setIntervalId = setInterval(initGame, intervalReccurence)
+}
+
+const changeDifficultyToMedium = () => {
+    intervalReccurence = 60;
+    setIntervalId = setInterval(initGame, intervalReccurence)
+}
+
+const changeDifficultyToHard = () => {
+    intervalReccurence = 30;
+    setIntervalId = setInterval(initGame, intervalReccurence)
+}
+
+const changeDifficultyToImpossible = () => {
+    intervalReccurence = 20;
+    setIntervalId = setInterval(initGame, intervalReccurence)
 }
 
 const handleGameOver = () => {
@@ -27,15 +49,19 @@ const handleGameOver = () => {
 
 const changeDirection = (e) => {
     if(e.key === "w" && velocityY != 1) {
+        helpText.style.display="none";
         velocityX = 0;
         velocityY = -1;
     } else if(e.key === "s" && velocityY != -1) {
+        helpText.style.display="none";
         velocityX = 0;
         velocityY = 1;
     } else if(e.key === "d" && velocityX != -1) {
+        helpText.style.display="none";
         velocityX = 1;
         velocityY = 0;
     } else if(e.key === "a" && velocityX != 1) {
+        helpText.style.display="none";
         velocityX = -1;
         velocityY = 0;
     }
@@ -48,6 +74,8 @@ controls.forEach(key => {
 const initGame = () => {
     if(gameOver) return handleGameOver();
     let htmlMarkup = `<div class="food" style="grid-area: ${foodY} / ${foodX}"></div>`;
+
+    helpText.innerText = "Press W, A, S, D or a button to start"
 
     if(snakeX === foodX && snakeY === foodY) {
         changeFoodPosition();
@@ -82,7 +110,15 @@ const initGame = () => {
     }
 
     playBoard.innerHTML = htmlMarkup;
+
+    const easyButton = document.getElementById("easy");
+    easyButton.style.display = "none";
+    const mediumButton = document.getElementById("medium");
+    mediumButton.style.display = "none";
+    const hardButton = document.getElementById("hard");
+    hardButton.style.display = "none";
+    const impossibleButton = document.getElementById("impossible");
+    impossibleButton.style.display = "none";
 }
 changeFoodPosition();
-setIntervalId = setInterval(initGame, 125)
 document.addEventListener("keydown", changeDirection)
